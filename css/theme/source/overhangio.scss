@@ -1,0 +1,31 @@
+:root {
+    --text-color: #3c3c3c;
+}
+@font-face {
+    font-family: 'reader';
+    font-weight: normal;
+    src: url(/vendor/fonts/reader-regular-pro.otf) format('opentype');
+}
+@font-face {
+    font-family: 'reader';
+    font-weight: bold;
+    src: url(/vendor/fonts/reader-bold-pro.otf) format('opentype');
+}
+.reveal {
+    font-family: 'reader';
+    color: var(--text-color);
+    h1, h2, h3, h4 {
+        font-family: 'reader';
+        font-weight: bold;
+        color: var(--text-color);
+    }
+    a, a:hover {
+        color: #DB1D52;
+    }
+    .narrow {
+        width: 900px;
+    }
+    blockquote {
+        background-color: #e8e8e8;
+    }
+}

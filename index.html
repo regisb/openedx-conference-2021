@@ -1,0 +1,307 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Hack it, Build it, Ship it, Sell it (with Tutor) | Open edX conference, Dec. 14th 2021</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/simple.css">
+		<link rel="stylesheet" href="dist/vendor/fontawesome/css/all.min.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+
+    <link rel="stylesheet" href="dist/theme/overhangio.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Hack it, Build it,<br>Ship it, Sell it</h1>
+					<h1 style="font-size: 3.0em;">(with Tutor)</h1>
+					<p>Régis Behmo</p>
+					<p style="line-height: 0;">Open edX end-of-year celebration, Dec. 14th 2021</p>
+				</section>
+
+				<section>
+					<h2>Hi!</h2>
+					<p>I'm Régis Behmo :-)</p>
+                    <p>Freelance software engineer @ <a href="https://overhang.io">Overhang.IO</a></p>
+                    <p>160+ <a href="https://github.com/pulls?q=is%3Apr+author%3Aregisb+user%3Aedx+is%3Aclosed">pull requests</a> on Open edX</p>
+					<p>Principal <a href="https://docs.tutor.overhang.io">Tutor</a> maintainer</p>
+				</section>
+
+                <section><h2>Let's talk about Tutor</h2></section>
+
+                <section>
+                    <pre><code class="language-shell" style="max-height: 600px">$ pip install tutor
+$ tutor local quickstart
+==================================================
+    Interactive platform configuration
+==================================================
+Are you configuring a production platform? [y/N] y
+Your website domain name for students (LMS) [local.overhang.io] mydomain.com
+Your website domain name for teachers (CMS) [studio.mydomain.com]
+Your platform name/title [My Open edX] Merry 🎅 Open edX!
+Your public contact email address [contact@mydomain.com]
+The default language code for the platform [en] zh-cn
+Activate SSL/TLS certificates for HTTPS access? [y/N] y
+...
+Your Open edX platform is ready and can be accessed at the following urls:
+
+    https://mydomain.com
+    https://studio.mydomain.com</code></pre>
+                </section>
+
+                <section data-background-image="img/quickstart.png" data-background-size="contain"></section>
+                <section>
+                    <img src="img/maslow.png">
+                </section>
+                <section>
+                    <h2>"Reliable"</h2>
+                    <div style="display: flex; justify-content: space-around;">
+                        <div style="padding: 20px; border-right: 2px solid var(--text-color);">
+                            <h3>Understandable</h3>
+                            <p>Intuitive CLI</p>
+                            <p>Transparent Docker commands</p>
+                            <p>All data in ~/.local/share/tutor</p>
+                        </div>
+                        <div style="padding: 20px; border-right: 2px solid var(--text-color);">
+                            <h3>Repeatable</h3>
+                            <p>Stateless containers</p>
+                            <p>Idempotent commands</p>
+                        </div>
+                        <div style="padding: 20px;">
+                            <h3>Fast</h3>
+                            <p>Docker layer cache</p>
+                            <p>Minimal "core"<br>platform</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Links</h3>
+                    <p>
+                        <i class="fa fa-book"></i> <a href="https://docs.tutor.overhang.io">https://docs.tutor.overhang.io</a>
+                    </p>
+                    <p>
+                        <i class="fab fa-python"></i> <a href="https://pypi.org/project/tutor">https://pypi.org/project/tutor</a>
+                    </p>
+                    <p>
+                        <i class="fab fa-github"></i> <a href="https://github.com/overhangio/tutor">https://github.com/overhangio/tutor</a>
+                    </p>
+                    <p>
+                        <i class="fab fa-discourse"></i> <a href="https://discuss.overhang.io">https://discuss.overhang.io</a>
+                    </p>
+                    <p>Dec. 20th 2021, Maple release: Tutor replaces the native installation as the default community installation.</p>
+                    <p>Future plans: replace the Devstack.</p>
+								</section>
+								<section>
+                    <h3>Special thanks to...</h3>
+                    <p>Community maintainers (see <a href="https://discuss.overhang.io/t/the-tutor-maintainer-handbook/1375">handbook</a>)</p>
+                    <p>edX for financial support</p>
+                </section>
+                <section>
+                    <img src="img/maslow2.png">
+                </section>
+
+                <section>
+                    <ol>
+                        <li>Configuration management</li>
+                        <li>Template rendering</li>
+                        <li>Command line interface</li>
+                    </ol>
+                    <br>
+                    <br>
+                    <br>
+                    <h3 class="fragment">all extendable with plugins!</h3>
+                </section>
+                <section>
+                    <ol>
+                        <li>Configuration management</li>
+                        <li>Template rendering</li>
+                        <li>Command line interface</li>
+                    </ol>
+                    <br>
+                    <br>
+                    <br>
+                    <h3 class="rainbow">all extendable with plugins!</h3>
+                </section>
+                <section>
+                    <p>Configuration management</p>
+                    <pre><code class="language-shell">$ tutor config save --set LMS_HOST="mydomain.com"
+$ grep LMS_HOST ~/.local/share/tutor/config.yml
+LMS_HOST: mydomain.com</code></pre>
+                    <p>Template rendering</p>
+                    <pre><code class="language-shell">$ git grep LMS_BASE -- tutor/templates/apps/openedx/config/lms.env.json
+"LMS_BASE": "{{ LMS_HOST }}",
+$ grep LMS_BASE ~/.local/share/tutor/env/apps/openedx/config/lms.env.json
+"LMS_BASE": "mydomain.com",</code></pre>
+                    <p>Command line interface</p>
+                    <pre><code class="language-shell">$ tutor local quickstart
+$ tutor local createuser --superuser --staff admin admin@overhang.io
+$ tutor local importdemocourse
+$ tutor k8s scale lms 11</code></pre>
+                    <br>
+                </section>
+                <section>
+                    <h3>Creating a <span class="rainbow">plugin</span></h3>
+                    <pre><code class="language-shell">$ pip install cookiecutter
+$ cookiecutter https://github.com/overhangio/cookiecutter-tutor-plugin.git
+  ...
+$ pip install -e ./tutor-contrib-myplugin
+$ tutor plugins enable myplugin
+$ tutor local quickstart</code></pre>
+                    <ol>
+                        <li>Configuration management: <code>config = {"add": {"MYSETTING": "value"}}</code></li>
+                        <li>Template rendering: <code>{{ patch(...) }}</code></li>
+                        <li>Command line interface: <code>tutor myplugin ...</code></li>
+                    </ol>
+                </section>
+                <section>
+                    <h3>Tutor plugins</h3>
+                    <ul>
+                        <li><a href="https://github.com/overhangio/tutor-notes">Student notes</a>, <a href="https://github.com/overhangio/tutor-ecommerce">Ecommerce</a>, <a href="https://github.com/overhangio/tutor-richie">Richie course catalog</a>, <a href="https://github.com/overhangio/tutor-android">Android app</a>...</li>
+                        <li><a href="https://github.com/eduNEXT/tutor-contrib-codejail/">Codejail</a>, by <a href="https://www.edunext.co/">eduNEXT</a></li>
+                        <li>Tutor <a href="https://overhang.io/tutor/wizardedition">Wizard Edition</a> (including <a href="https://overhang.io/tutor/plugin/cairn">Cairn analytics</a>)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="r-fit-text">Extensibility → Diversity</h2>
+                </section>
+                <section>
+                    <h3>Making Open edX easier to use...</h3>
+                    <br>
+                    <p>“Why would you want to do that?”</p>
+                    <p>“Does that mean more community support?”</p>
+                    <p>“Open edX administration should be left to experts”</p>
+                </section>
+                <section data-background="/img/barriertoentry.png" data-background-size="contain"></section>
+                <section>
+                    <img src="/img/barriertoentry.png" style="max-height: 500px">
+                    <h2>Less complexity → more experts</h2>
+                </section>
+                <section data-background="/img/complexity.png" data-background-size="contain"></section>
+                <section>
+                    <img src="/img/complexity.png" style="max-height: 500px">
+                    <h2>Less complexity → cheaper software</h2>
+                </section>
+
+                <section>
+                    <h1 class="r-fit-text">What do we want<br>to achieve?</h1>
+                </section>
+                <section>
+                    <h2>What do we want to achieve?</h2>
+                    <blockquote style="text-align: left; font-size: 80%;">
+                    &ldquo;1. Increase access to high-quality education for everyone, everywhere.<br>
+                    2. Enhance teaching and learning on campus and online.<br>
+                    3. Advance teaching and learning through research.&rdquo;
+                    </blockquote>
+                    <p>Our mission, <a href="https://www.edx.org/about-us">https://www.edx.org/about-us</a></p>
+                    <blockquote>
+                    &ldquo;I want to teach a billion learners.&rdquo;
+                    </blockquote>
+                    <p>Anant Agarwal, 2013</p>
+                </section>
+                <section>
+                    <h2>What works</h2>
+                    <ul>
+                        <li><a href="https://edx.org">edX.org</a></li>
+                        <li>Growing Open edX ecosystem</li>
+                        <li>3rd-party contributions</li>
+                        <li>Working groups & community-led decisions</li>
+                        <li>Tutor as a package manager</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>What doesn't work (yet)</h2>
+                    <ul>
+                        <li>Disconnect between edX and the rest of the Open edX community</li>
+                        <li>3rd-party commitment to extension maintenance</li>
+                        <li>Ownership: &ldquo;if you break it, you fix it.&rdquo;</li>
+                    </ul>
+                </section>
+                <section>
+                    <h1 class="r-fit-text">What doesn't work <u>at all</u></h1>
+                </section>
+                <section><h1>Reimagining<br>education</h1>
+								</section>
+                <section><h1>Revolutionize<br>education</h1>
+								</section>
+                <section>
+                    <h1>Education<br>is not a business</h1>
+                </section>
+                <section>
+                    <h2>Education is not a business</h2>
+                    <p>Education must be free, open and decentralized</p>
+                    <p>Technology must not be adversarial</p>
+                    <p>Startups are not healthy examples to replicate</p>
+                </section>
+                <section>
+                    <h2>Proposed action items</h2>
+                    <ul>
+                        <li>Publicly discuss the Open edX roadmap (<a href="https://github.com/openedx/platform-roadmap">github.com/openedx/platform-roadmap)</a></li>
+                        <li>Bring non-profit organizations to the table</li>
+                        <li>Publish course content under a creative commons license</li>
+                        <li>Implement content and access federation across Open edX instances</li>
+                        <li>Build a global community of learners</li>
+                        <li>Reach sustainability and foster innovation through an Open edX Foundation</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Let's continue the conversation</h3>
+                    <p>regis@behmo.com<br>@regis on <a href="https://discuss.openedx.org">discuss.openedx.org</a></p>
+                    <br>
+                    <h3>Huge thanks to the Maple release contributors!</h3>
+                    <p>(press z to dance)</p>
+                    <p>Gabriel D'Amours, Xavier Antoviaque, Jhony Avella, Ned Batchelder, Dennis Bates, Sofiane Bébert, Sarina Canelake, Suman Chapai, Shimul Chowdhury, Zia Fazal, Matjaz Gregoric, Asad Iqbal, Nizar Mahmoud, Ghassan Maslamani, Peter Pinch, Phillip Shiu, Max Sokolski, Kevin Valencia, Michael Wheeler</p>
+                </section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+
+        <script src="dist/vendor/fontawesome/js/all.min.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+                width: 1600,
+				hash: true,
+				progress: false,
+				controls: false,
+				history: true,
+				transition: 'fade',
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+
+            // rainbowify stuff
+            var rainbowPos = 0;
+            var elements = document.getElementsByClassName("rainbow");
+            for(var index=0; index < elements.length; index += 1) {
+                var elt = elements[index];
+                var colors = ["red", "orange", "yellow", "green", "blue", "magenta", "purple"];
+                var content = "";
+                var letters = elt.textContent.split("");
+                for(var i = 0; i < letters.length; i++) {
+                    var color = colors[rainbowPos % colors.length];
+                    //var color = colors[parseInt(Math.random() * colors.length)];
+                    content += "<span style=\"color: " + color + ";\">" + letters[i] + "<\/span>";
+                    rainbowPos += 1;
+                }
+                elt.innerHTML = content;
+            };
+		</script>
+	</body>
+</html>
