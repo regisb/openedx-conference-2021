@@ -13,11 +13,11 @@
   src: url(/dist/vendor/fonts/reader-bold-pro.otf) format("opentype");
 }
 .reveal {
-  font-family: "reader";
+  font-family: "reader", sans-serif;
   color: var(--text-color);
 }
 .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
-  font-family: "reader";
+  font-family: "reader", sans-serif;
   font-weight: bold;
   color: var(--text-color);
 }
